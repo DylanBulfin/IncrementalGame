@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeaderModules" load_steps=4 format=3 uid="uid://bm4agierbvtph"]
+
+[ext_resource type="Script" path="res://resources/scripts/header_module.gd" id="1_0a3yw"]
+[ext_resource type="Script" path="res://resources/scripts/header_modules.gd" id="2_hrfra"]
+
+[sub_resource type="Resource" id="Resource_21bis"]
+script = ExtResource("1_0a3yw")
+name = "bank"
+template = "Bank: %s"
+signals = Array[String](["bank_change"])
+
+[resource]
+script = ExtResource("2_hrfra")
+items = Array[ExtResource("1_0a3yw")]([SubResource("Resource_21bis")])

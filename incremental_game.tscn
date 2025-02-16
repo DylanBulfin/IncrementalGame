@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://60fhdbf847vb"]
+
+[ext_resource type="Script" path="res://scripts/incremental_game.gd" id="1_jqi77"]
+[ext_resource type="Script" path="res://scripts/screen_manager.gd" id="2_tnsj2"]
+[ext_resource type="Script" path="res://scenes/components/scripts/side_menu.gd" id="3_i1ats"]
+[ext_resource type="Script" path="res://scripts/popup_manager.gd" id="3_qhrio"]
+[ext_resource type="Script" path="res://scripts/header_manager.gd" id="4_wcaps"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tnwp"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="IncrementalGame" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jqi77")
+
+[node name="ScreenManager" type="Node" parent="."]
+script = ExtResource("2_tnsj2")
+
+[node name="PopupManager" type="Node" parent="."]
+script = ExtResource("3_qhrio")
+
+[node name="InputManager" type="Node" parent="."]
+
+[node name="HeaderManager" type="Node" parent="."]
+script = ExtResource("4_wcaps")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SideMenu" type="ItemList" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/guide_color = Color(1, 1, 1, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_5tnwp")
+script = ExtResource("3_i1ats")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SideMenuButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Tog"
+
+[node name="HeaderContainer" type="GridContainer" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 2
+
+[node name="ScreenContainer" type="Control" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="item_selected" from="HBoxContainer/SideMenu" to="ScreenManager" method="_on_side_menu_item_selected"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/SideMenuButton" to="PopupManager" method="_on_side_menu_button_pressed"]
