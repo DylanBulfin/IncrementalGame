@@ -13,14 +13,14 @@ var _cspeed: float = 1.0 # Crafting/manufacturing speed
 
 var _header_sets: Array#[HeaderSetModel]
 var _screens: Array[String] = preload("res://resources/side_menu_items.tres").items
-var _facilities: Array[Models.FacilityModel]
+var _facilities: Array[Models.Facility]
 
 #region Getters
 func bank() -> float: return _bank
 func cspeed() -> float: return _cspeed
-func header_set(id: int) -> Models.HeaderSetModel: return _header_sets[id]
+func header_set(id: int) -> Models.HeaderSet: return _header_sets[id]
 func screens() -> Array[String]: return _screens
-func facilities() -> Array[Models.FacilityModel]: return _facilities
+func facilities() -> Array[Models.Facility]: return _facilities
 #endregion
 
 # Called when the node enters the scene tree for the first time.
@@ -32,16 +32,16 @@ func _ready() -> void:
 
 #region Header
 func _ready_header():
-	var mods: Array = preload("res://resources/header_modules.tres").items.map(func(m): 
-		return Models.HeaderModuleModel.new(m.name, m.template, m.signals)
+	var mods: Array = preload("res://resources/headers/header_modules.tres").items.map(func(m): 
+		return Models.HeaderModule.new(m.name, m.template, m.signals)
 	)
 	var header_modules: Dictionary
 	
 	for mod in mods:
 		header_modules[mod._fname] = mod
 		
-	var sets: Array = preload("res://resources/header_sets.tres").items.map(func(s):
-		return Models.HeaderSetModel.new(s.name, s.modules.map(func(n): return header_modules[n]))
+	var sets: Array = preload("res://resources/headers/header_sets.tres").items.map(func(s):
+		return Models.HeaderSet.new(s.name, s.modules.map(func(n): return header_modules[n]))
 	)
 	
 	_header_sets = sets
@@ -68,12 +68,12 @@ func bank_credit(amount: float) -> void:
 
 #region Facilities
 func _ready_facility() -> void:
-	var facility_resources = preload("res://resources/facilities.tres").items
+	var facility_resources = preload("res://resources/facilities/facilities.tres").items
 	
 	# Translate facility resources to live model
 	for i in range(len(facility_resources)):
 		var resource = facility_resources[i]
-		_facilities.append(Models.FacilityModel.new(
+		_facilities.append(Models.Facility.new(
 			i, 
 			resource.name, 
 			resource.base_cost, 

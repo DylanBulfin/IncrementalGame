@@ -1,5 +1,5 @@
 extends Resource
-class_name HeaderModule
+class_name HeaderModuleResource
 
 @export var name: String
 @export var template: String = "%s"

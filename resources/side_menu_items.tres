@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SideMenuItems" load_steps=2 format=3 uid="uid://dm5y0qvo86l4u"]
 
-[ext_resource type="Script" path="res://resources/scripts/side_menu_items.gd" id="1_1wxhs"]
+[ext_resource type="Script" path="res://resources/side_menu_items.gd" id="1_1wxhs"]
 
 [resource]
 script = ExtResource("1_1wxhs")

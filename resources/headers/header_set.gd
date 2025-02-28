@@ -1,5 +1,5 @@
 extends Resource
-class_name HeaderSet
+class_name HeaderSetResource
 
 # This represents a set of HeaderModules representing a screen.
 

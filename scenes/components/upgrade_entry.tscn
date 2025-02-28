@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://hvokt8fw3cmt"]
+
+[ext_resource type="Script" path="res://scenes/components/scripts/facility_entry.gd" id="1_ryusd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwdhv"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[node name="UpgradeEntry" type="Button"]
+custom_minimum_size = Vector2(0, 80)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+size_flags_vertical = 3
+theme_override_styles/hover = SubResource("StyleBoxFlat_iwdhv")
+script = ExtResource("1_ryusd")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 77.0
+grow_horizontal = 2
+columns = 2

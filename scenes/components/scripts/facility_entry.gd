@@ -1,6 +1,6 @@
 extends Button
 
-var base: Models.FacilityModel
+var base: Models.Facility
 
 var name_label: Label = Label.new()
 var cost_label: Label = Label.new()

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Facilities" load_steps=11 format=3 uid="uid://bu2o1dibwpk6l"]
 
-[ext_resource type="Script" path="res://resources/scripts/facility.gd" id="1_taign"]
-[ext_resource type="Script" path="res://resources/scripts/facilities.gd" id="2_ixohs"]
+[ext_resource type="Script" path="res://resources/facilities/facility.gd" id="1_taign"]
+[ext_resource type="Script" path="res://resources/facilities/facilities.gd" id="2_ixohs"]
 
 [sub_resource type="Resource" id="Resource_krolr"]
 script = ExtResource("1_taign")

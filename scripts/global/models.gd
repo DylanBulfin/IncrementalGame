@@ -3,7 +3,7 @@ extends Node
 # Holds the type definitions used elsewhere in the project
 
 #region Headers
-class HeaderModuleModel:
+class HeaderModule:
 	var _fname: String
 	var _template: String
 	var _signals: Array#[String]
@@ -17,9 +17,9 @@ class HeaderModuleModel:
 	func template() -> String: return self._template
 	func signals() -> Array: return self._signals
 		
-class HeaderSetModel:
+class HeaderSet:
 	var _fname: String
-	var _modules: Array#[HeaderModuleModel]
+	var _modules: Array#[HeaderModule]
 	
 	func _init(_fname_: String, _modules_: Array):
 		self._fname = _fname_
@@ -30,9 +30,9 @@ class HeaderSetModel:
 #endregion
 
 #region Facilities
-class FacilityModel:
+class Facility:
 	var _id: int
-	var _name: String
+	var _fname: String
 	var _cost: float
 	var _output: float
 	var _cost_ratio: float
@@ -44,7 +44,7 @@ class FacilityModel:
 
 	func _init(_id_: int, _fname_: String, _cost_: float, _output_: float, _cost_ratio_: float, _tens_multi_: float, _hnds_multi_: float, _count_: int = 0):
 		self._id = _id_
-		self._name = _fname_
+		self._fname = _fname_
 		self._cost = _cost_
 		self._output = _output_
 		self._cost_ratio = _cost_ratio_
@@ -53,7 +53,7 @@ class FacilityModel:
 		self._hnds_multi = _hnds_multi_
 	
 	func id() -> int: return self._id
-	func fname() -> String: return self._name
+	func fname() -> String: return self._fname
 	func cost() -> float: return self._cost
 	func output() -> float: return self._output
 	func cost_ratio() -> float: return self._cost_ratio
@@ -61,4 +61,48 @@ class FacilityModel:
 	func tens_multi() -> float: return self._tens_multi
 	func hnds_multi() -> float: return self._hnds_multi
 	func percent() -> float: return self._percent
+#endregion
+
+#region Upgrades
+enum UpgradeType {
+	Facility1,
+	Facility2,
+	Facility3,
+	Facility4,
+	Facility5,
+	Facility6,
+	Facility7,
+	Facility8,
+	
+	AllFacilities,
+	
+	CSpeed,
+	COutput,
+}
+
+class Upgrade:
+	var _id: int
+	var _fname: String
+	var _cost: float
+	var _type: UpgradeType
+	var _multiplier: float
+	var _cost_ratio: float
+	var _level: int
+
+	func _init(_id_: int, _fname_: String, _cost_: float, _type_: UpgradeType, _multiplier_: float, _cost_ratio_: float, _level_: int = 0):
+		self._id = _id_
+		self._fname = _fname_
+		self._cost = _cost_
+		self._type = _type_
+		self._multiplier = _multiplier_
+		self._cost_ratio = _cost_ratio_
+		self._level = _level_
+	
+	func id() -> int: return self._id
+	func fname() -> String: return self._fname
+	func cost() -> float: return self._cost
+	func type() -> UpgradeType: return self._type
+	func multiplier() -> float: return self._multiplier
+	func cost_ratio() -> float: return self._cost_ratio
+	func level() -> int: return self._level
 #endregion

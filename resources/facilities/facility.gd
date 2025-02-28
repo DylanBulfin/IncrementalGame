@@ -1,5 +1,5 @@
 extends Resource
-class_name Facility
+class_name FacilityResource
 
 @export var name: String
 @export var base_cost: float
