@@ -37,12 +37,12 @@ func _pressed() -> void:
 		var new_level = base.level() + 1
 		var new_cost = base.cost() * base.cost_ratio()
 		
-		State.upgrade_update_state(base.id(), new_level, new_cost)
+		State.upgrades_update_state(base.id(), new_level, new_cost)
 
 func update_text() -> void:
 	name_label.text = base.fname()
 	cost_label.text = str("Cost: ", State.fnum(base.cost()))
-	multi_label.text = str("Output: ", State.fnum(base.multi()))
+	multi_label.text = str("Mult.: ", State.fnum(base.multiplier()))
 	level_label.text = str("Lvl " + State.fnum(base.level()))
 
 func update_vis() -> void:

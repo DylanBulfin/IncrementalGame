@@ -4,3 +4,5 @@ extends ItemList
 func _ready() -> void:
 	for screen in State.screens():
 		self.add_item(screen)
+	
+	self.select(0)

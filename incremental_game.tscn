@@ -44,8 +44,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/guide_color = Color(1, 1, 1, 1)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5tnwp")
-item_count = 1
-item_0/text = "arst"
+allow_reselect = true
 script = ExtResource("3_i1ats")
 
 [node name="MainContent" type="VBoxContainer" parent="HBoxContainer"]

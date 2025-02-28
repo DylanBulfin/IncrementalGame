@@ -11,7 +11,7 @@ signal upgrade_changed(id: int)
 # Globally-relevant variables
 var update_interval_s: float = 0.2
 
-var _bank: float = 1.0
+var _bank: float = 1.0e12
 var _cspeed: float = 1.0 # Crafting/manufacturing speed
 
 var _header_sets: Array#[HeaderSetModel]
@@ -32,6 +32,7 @@ func upgrades() -> Array[Models.Upgrade]: return _upgrades
 func _ready() -> void:
 	_ready_facility()
 	_ready_header()
+	_ready_upgrades()
 
 # Most global state functions below, mostly separated by category
 
@@ -101,6 +102,11 @@ func facility_update_state(id: int, count: int, output: float, cost: float) -> v
 func facility_update_percent(id: int, percent: float) -> void:
 	_facilities[id]._percent = percent
 	facility_changed.emit(id)
+	
+func facility_apply_multiplier(id: int, multi: float) -> void:
+	_facilities[id]._output *= multi
+	facility_changed.emit(id)
+	
 #endregion
 
 #region Upgrades
@@ -122,14 +128,23 @@ func _ready_upgrades() -> void:
 		)
 
 func upgrades_update_state(id: int, level: int, cost: float) -> void:
-	_upgrades[id]._level = level
-	_upgrades[id]._cost = cost
+	var upgrade = _upgrades[id]
+	var new_levels = level - upgrade._level
+
+	upgrade._level = level
+	upgrade._cost = cost
 	upgrade_changed.emit(id)
 	
 	# Actually apply upgrade
-	match _upgrades[id]._type:
-		Models.UpgradeType.Facility1:
-			pass
+	var total_multi = upgrade._multiplier ** new_levels
+	
+	if upgrade._type as int <= Models.UpgradeType.Facility8 as int:
+		facility_apply_multiplier(upgrade._type as int, total_multi)
+	else:
+		match upgrade._type:
+			Models.UpgradeType.CSpeed:
+				_cspeed *= total_multi
+	
 #endregion
 
 #region Manufacturing
