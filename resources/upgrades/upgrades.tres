@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Upgrades" load_steps=6 format=3 uid="uid://l5a25av8lkqi"]
+
+[ext_resource type="Script" path="res://resources/upgrades/upgrade.gd" id="1_kbjor"]
+[ext_resource type="Script" path="res://resources/upgrades/upgrades.gd" id="2_bdhki"]
+
+[sub_resource type="Resource" id="Resource_05l3j"]
+script = ExtResource("1_kbjor")
+id = 0
+name = "nW Prod"
+cost = 1000.0
+type = 0
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_xoj6n"]
+script = ExtResource("1_kbjor")
+id = 1
+name = "mW Prod"
+cost = 1e+06
+type = 1
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_47jf0"]
+script = ExtResource("1_kbjor")
+id = 2
+name = "Craft Speed"
+cost = 1e+09
+type = 9
+multiplier = 1.5
+cost_ratio = 10.0
+level = 0
+
+[resource]
+script = ExtResource("2_bdhki")
+items = Array[ExtResource("1_kbjor")]([SubResource("Resource_05l3j"), SubResource("Resource_xoj6n"), SubResource("Resource_47jf0")])

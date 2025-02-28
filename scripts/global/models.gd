@@ -65,14 +65,17 @@ class Facility:
 
 #region Upgrades
 enum UpgradeType {
-	Facility1,
-	Facility2,
-	Facility3,
-	Facility4,
-	Facility5,
-	Facility6,
-	Facility7,
-	Facility8,
+	# Manually define them so the int value corresponds to the index
+	# in the facilities array. This allows us to avoid handling each
+	# facility upgrade individually.
+	Facility1 = 0,
+	Facility2 = 1,
+	Facility3 = 2,
+	Facility4 = 3,
+	Facility5 = 4,
+	Facility6 = 5,
+	Facility7 = 6,
+	Facility8 = 7,
 	
 	AllFacilities,
 	

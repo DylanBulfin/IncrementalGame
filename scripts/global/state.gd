@@ -1,9 +1,12 @@
 extends Node
 
 # Signals
+signal screen_change(id: int)
+
 signal bank_change
 signal facility_changed(id: int)
 signal cspeed_change
+signal upgrade_changed(id: int)
 
 # Globally-relevant variables
 var update_interval_s: float = 0.2
@@ -14,6 +17,7 @@ var _cspeed: float = 1.0 # Crafting/manufacturing speed
 var _header_sets: Array#[HeaderSetModel]
 var _screens: Array[String] = preload("res://resources/side_menu_items.tres").items
 var _facilities: Array[Models.Facility]
+var _upgrades: Array[Models.Upgrade]
 
 #region Getters
 func bank() -> float: return _bank
@@ -21,6 +25,7 @@ func cspeed() -> float: return _cspeed
 func header_set(id: int) -> Models.HeaderSet: return _header_sets[id]
 func screens() -> Array[String]: return _screens
 func facilities() -> Array[Models.Facility]: return _facilities
+func upgrades() -> Array[Models.Upgrade]: return _upgrades
 #endregion
 
 # Called when the node enters the scene tree for the first time.
@@ -28,7 +33,10 @@ func _ready() -> void:
 	_ready_facility()
 	_ready_header()
 
-# Most global state functions below, separated by category
+# Most global state functions below, mostly separated by category
+
+func change_screen(index: int) -> void:
+	screen_change.emit(index)
 
 #region Header
 func _ready_header():
@@ -93,6 +101,35 @@ func facility_update_state(id: int, count: int, output: float, cost: float) -> v
 func facility_update_percent(id: int, percent: float) -> void:
 	_facilities[id]._percent = percent
 	facility_changed.emit(id)
+#endregion
+
+#region Upgrades
+func _ready_upgrades() -> void:
+	var upgrade_resources = preload("res://resources/upgrades/upgrades.tres").items
+	
+	for i in range(len(upgrade_resources)):
+		var resource = upgrade_resources[i]
+		
+		_upgrades.append(Models.Upgrade.new(
+			i, 
+			resource.name,
+			resource.cost, 
+			resource.type,
+			resource.multiplier,
+			resource.cost_ratio,
+			resource.level
+			)
+		)
+
+func upgrades_update_state(id: int, level: int, cost: float) -> void:
+	_upgrades[id]._level = level
+	_upgrades[id]._cost = cost
+	upgrade_changed.emit(id)
+	
+	# Actually apply upgrade
+	match _upgrades[id]._type:
+		Models.UpgradeType.Facility1:
+			pass
 #endregion
 
 #region Manufacturing

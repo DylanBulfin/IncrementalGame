@@ -23,16 +23,17 @@ func _ready() -> void:
 		%ScreenContainer.add_child(node)
 		
 	screen_nodes[0].visible = true
+	
+	State.connect("screen_change", _on_screen_change)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 
-
-func _on_side_menu_item_selected(index: int) -> void:
+func _on_screen_change(index: int) -> void:
 	if current_screen_index != index:
 		screen_nodes[current_screen_index].visible = false
-		screen_nodes[index].visible = true
-		current_screen_index = index
 	
+	screen_nodes[index].visible = true
+	current_screen_index = index
