@@ -21,12 +21,12 @@ func _process(delta: float) -> void:
 	
 	if dd >= .2:
 		# Time to update again
-		var outputs = Globals.facilities.map(func(f): return f.count * f.output * dd)
+		var outputs = Globals.facilities.map(func(f): return f.count() * f.output() * dd)
 		var total = outputs.reduce(func(a,b): return a+b)
 
 		for i in range(len(outputs)):
-			Globals.facilities[i].percent = outputs[i] / total * 100 if total > 0 else 0
-			Globals.register_facility_change(i)
+			Globals.update_facility_percent(i, outputs[i] / total * 100 if total > 0 else 0)
+			
 			
 		if total > 0:
 			Globals.credit_bank(total)

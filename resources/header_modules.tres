@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="HeaderModules" load_steps=4 format=3 uid="uid://bm4agierbvtph"]
+[gd_resource type="Resource" script_class="HeaderModules" load_steps=5 format=3 uid="uid://bm4agierbvtph"]
 
 [ext_resource type="Script" path="res://resources/scripts/header_module.gd" id="1_0a3yw"]
 [ext_resource type="Script" path="res://resources/scripts/header_modules.gd" id="2_hrfra"]
@@ -9,6 +9,12 @@ name = "bank"
 template = "Bank: %s"
 signals = Array[String](["bank_change"])
 
+[sub_resource type="Resource" id="Resource_1jwn4"]
+script = ExtResource("1_0a3yw")
+name = "cspeed"
+template = "Craft Speed: %s"
+signals = Array[String](["cspeed_change"])
+
 [resource]
 script = ExtResource("2_hrfra")
-items = Array[ExtResource("1_0a3yw")]([SubResource("Resource_21bis")])
+items = Array[ExtResource("1_0a3yw")]([SubResource("Resource_21bis"), SubResource("Resource_1jwn4")])

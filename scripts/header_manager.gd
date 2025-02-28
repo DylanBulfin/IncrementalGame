@@ -47,7 +47,7 @@ func _update_content() -> void:
 		
 		match mod._name:
 			"bank":
-				text = mod.template % Globals.fnum(Globals.bank)
+				text = mod.template % Globals.fnum(Globals.bank())
 				
 
 		labels[i].text = text

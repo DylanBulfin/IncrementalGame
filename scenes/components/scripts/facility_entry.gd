@@ -27,25 +27,26 @@ func _ready() -> void:
 	update_text()
 
 func _on_facility_changed(id: int):
-	if id == base.id:
+	if id == base.id():
 		update_text()
 	
 func _pressed() -> void:
-	if Globals.try_debit_bank(base.cost):
-		base.count += 1
+	if Globals.try_debit_bank(base.cost()):
+		var new_output = base.output()
+		var new_count = base.count() + 1
 		
-		if base.count % 100 == 0:
-			base.output *= base.hnds_multi
-		elif base.count % 10 == 0:
-			base.output *= base.tens_multi
-			
-		base.cost *= base.cost_ratio
+		if new_count % 100 == 0:
+			new_output *= base.hnds_multi()
+		elif new_count % 10 == 0:
+			new_output *= base.tens_multi()
 		
-		Globals.register_facility_change(base.id)
+		var new_cost = base.cost() * base.cost_ratio()
+		
+		Globals.update_facility_state(base.id(), new_count, new_output, new_cost)
 
 func update_text() -> void:
-	name_label.text = base._name
-	cost_label.text = str("Cost: ", Globals.fnum(base.cost))
-	output_label.text = str("Output: ", Globals.fnum(base.output))
-	percent_label.text = str(Globals.fnum(base.percent), "%")
-	count_label.text = str("Count: ", base.count)
+	name_label.text = base.fname()
+	cost_label.text = str("Cost: ", Globals.fnum(base.cost()))
+	output_label.text = str("Output: ", Globals.fnum(base.output()))
+	percent_label.text = str(Globals.fnum(base.percent()), "%")
+	count_label.text = str("Count: ", base.count())

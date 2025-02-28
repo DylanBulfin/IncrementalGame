@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_bm0mb"]
 script = ExtResource("1_telrl")
 name = "facilities"
-modules = Array[String](["bank"])
+modules = Array[String](["bank", "cspeed"])
 
 [resource]
 script = ExtResource("2_rntrn")

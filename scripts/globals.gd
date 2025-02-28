@@ -3,6 +3,7 @@ extends Node
 # Signals
 signal bank_change
 signal facility_changed(id: int)
+signal cspeed_change
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -66,51 +67,77 @@ func _ready_header():
 #endregion
 	
 #region Bank
-var bank: float = 1
+var _bank: float = 1
+
+func bank() -> float: return _bank
 
 # Attempt to subtract given amount from bank, returning true
 # if successful
 func try_debit_bank(amount: float) -> bool:
-	if bank >= amount:
-		bank -= amount
+	if _bank >= amount:
+		_bank -= amount
 		bank_change.emit()
 		return true
 	else:
 		return false
 
 func credit_bank(amount: float) -> void:
-	bank += amount
+	_bank += amount
 	bank_change.emit()
 #endregion
 
 #region Facilities
 class FacilityModel:
-	var id: int
+	var _id: int
 	var _name: String
-	var cost: float
-	var output: float
-	var cost_ratio: float
-	var count: int
-	var tens_multi: float
-	var hnds_multi: float
+	var _cost: float
+	var _output: float
+	var _cost_ratio: float
+	var _count: int
+	var _tens_multi: float
+	var _hnds_multi: float
 	
-	# Percent of total output this building makes up
-	var percent: float = 0
-	
-	func _init(id_: int, name_: String, cost_: float, output_: float, cost_ratio_: float, tens_multi_: float, hnds_multi_: float, count_: int = 0):
-		self.id = id_
-		self._name = name_
-		self.cost = cost_
-		self.output = output_
-		self.cost_ratio = cost_ratio_
-		self.count = count_
-		self.tens_multi = tens_multi_
-		self.hnds_multi = hnds_multi_
+	var _percent: float = 0
 
-func register_facility_change(id: int) -> void:
-	facility_changed.emit(id)
+	func _init(id: int, fname: String, cost: float, output: float, cost_ratio: float, tens_multi: float, hnds_multi: float, count: int = 0):
+		self._id = id
+		self._name = fname
+		self._cost = cost
+		self._output = output
+		self._cost_ratio = cost_ratio
+		self._count = count
+		self._tens_multi = tens_multi
+		self._hnds_multi = hnds_multi
+	
+	func id() -> int: return self._id
+	func fname() -> String: return self._name
+	func cost() -> float: return self._cost
+	func output() -> float: return self._output
+	func cost_ratio() -> float: return self._cost_ratio
+	func count() -> int: return self._count
+	func tens_multi() -> float: return self._tens_multi
+	func hnds_multi() -> float: return self._hnds_multi
+	func percent() -> float: return self._percent
 
 var facilities: Array[FacilityModel]
+
+func update_facility_state(id: int, count: int, output: float, cost: float) -> void:
+	facilities[id]._count = count
+	facilities[id]._output = output
+	facilities[id]._cost = cost
+	facility_changed.emit(id)
+	
+func update_facility_percent(id: int, percent: float) -> void:
+	facilities[id]._percent = percent
+	facility_changed.emit(id)
+#endregion
+
+#region Manufacturing
+var cspeed: float = 1.0
+
+func multiply_cspeed(factor: float) -> void:
+	cspeed *= factor
+	cspeed_change.emit()
 #endregion
 
 #region Utils
