@@ -77,7 +77,8 @@ enum UpgradeType {
 	Facility7 = 6,
 	Facility8 = 7,
 	
-	AllFacilities,
+	AllFacilitiesOutput,
+	AllFacilitiesCost,
 	
 	CSpeed,
 	COutput,

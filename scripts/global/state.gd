@@ -144,6 +144,7 @@ func upgrades_update_state(id: int, level: int, cost: float) -> void:
 		match upgrade._type:
 			Models.UpgradeType.CSpeed:
 				_cspeed *= total_multi
+				cspeed_change.emit()
 	
 #endregion
 

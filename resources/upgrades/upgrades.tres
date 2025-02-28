@@ -1,12 +1,11 @@
-[gd_resource type="Resource" script_class="Upgrades" load_steps=6 format=3 uid="uid://l5a25av8lkqi"]
+[gd_resource type="Resource" script_class="Upgrades" load_steps=15 format=3 uid="uid://l5a25av8lkqi"]
 
 [ext_resource type="Script" path="res://resources/upgrades/upgrade.gd" id="1_kbjor"]
 [ext_resource type="Script" path="res://resources/upgrades/upgrades.gd" id="2_bdhki"]
 
 [sub_resource type="Resource" id="Resource_05l3j"]
 script = ExtResource("1_kbjor")
-id = 0
-name = "nW Prod"
+name = "nW Output"
 cost = 1000.0
 type = 0
 multiplier = 2.0
@@ -15,8 +14,7 @@ level = 0
 
 [sub_resource type="Resource" id="Resource_xoj6n"]
 script = ExtResource("1_kbjor")
-id = 1
-name = "mW Prod"
+name = "uW Output"
 cost = 1e+06
 type = 1
 multiplier = 2.0
@@ -25,14 +23,94 @@ level = 0
 
 [sub_resource type="Resource" id="Resource_47jf0"]
 script = ExtResource("1_kbjor")
-id = 2
+name = "mW Output"
+cost = 1e+09
+type = 2
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_o08ff"]
+script = ExtResource("1_kbjor")
+name = "W Output"
+cost = 1e+12
+type = 3
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_xxhee"]
+script = ExtResource("1_kbjor")
+name = "kW Output"
+cost = 1e+15
+type = 4
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_o4m7h"]
+script = ExtResource("1_kbjor")
+name = "MW Output"
+cost = 1e+18
+type = 5
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_yrfmq"]
+script = ExtResource("1_kbjor")
+name = "GW Output"
+cost = 1e+21
+type = 6
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_mxw7f"]
+script = ExtResource("1_kbjor")
+name = "TW Output"
+cost = 1e+24
+type = 7
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_etaue"]
+script = ExtResource("1_kbjor")
+name = "All Fac. Output"
+cost = 1e+27
+type = 8
+multiplier = 2.0
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_abqq5"]
+script = ExtResource("1_kbjor")
+name = "All Fac. Cost"
+cost = 1e+27
+type = 9
+multiplier = 0.5
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_n5gjh"]
+script = ExtResource("1_kbjor")
 name = "Craft Speed"
 cost = 1e+09
-type = 9
+type = 10
+multiplier = 1.5
+cost_ratio = 10.0
+level = 0
+
+[sub_resource type="Resource" id="Resource_txnkj"]
+script = ExtResource("1_kbjor")
+name = "Craft Output"
+cost = 1e+09
+type = 0
 multiplier = 1.5
 cost_ratio = 10.0
 level = 0
 
 [resource]
 script = ExtResource("2_bdhki")
-items = Array[ExtResource("1_kbjor")]([SubResource("Resource_05l3j"), SubResource("Resource_xoj6n"), SubResource("Resource_47jf0")])
+items = Array[ExtResource("1_kbjor")]([SubResource("Resource_05l3j"), SubResource("Resource_xoj6n"), SubResource("Resource_47jf0"), SubResource("Resource_o08ff"), SubResource("Resource_xxhee"), SubResource("Resource_o4m7h"), SubResource("Resource_yrfmq"), SubResource("Resource_mxw7f"), SubResource("Resource_etaue"), SubResource("Resource_abqq5"), SubResource("Resource_n5gjh"), SubResource("Resource_txnkj")])
