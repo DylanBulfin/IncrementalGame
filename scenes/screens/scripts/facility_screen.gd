@@ -7,7 +7,7 @@ var last_update: float = 0
 func _ready() -> void:
 	var entry_scene = preload("res://scenes/components/facility_entry.tscn")
 	
-	for facility in Globals.facilities:
+	for facility in State.facilities():
 		var node = entry_scene.instantiate()
 		node.base = facility
 		%FacilityContainer.add_child(node)
@@ -17,18 +17,18 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	total_delta += delta
 	
+	# deltaDelta
 	var dd = total_delta - last_update
 	
-	if dd >= .2:
-		# Time to update again
-		var outputs = Globals.facilities.map(func(f): return f.count() * f.output() * dd)
+	# It looks awful if you update every frame
+	if dd >= State.update_interval_s:
+		var outputs = State.facilities().map(func(f): return f.count() * f.output() * dd)
 		var total = outputs.reduce(func(a,b): return a+b)
 
 		for i in range(len(outputs)):
-			Globals.update_facility_percent(i, outputs[i] / total * 100 if total > 0 else 0)
-			
-			
+			State.facility_update_percent(i, outputs[i] / total * 100 if total > 0 else 0)
+
 		if total > 0:
-			Globals.credit_bank(total)
+			State.bank_credit(total)
 	
 		last_update = total_delta

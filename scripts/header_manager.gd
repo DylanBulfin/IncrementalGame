@@ -17,7 +17,7 @@ var labels: Array[Label] = [
 	Label.new(),
 ]
 
-var modules: Array#[Globals.HeaderModuleModel]
+var modules: Array#[State.HeaderModuleModel]
 var signals: Array[String]
 
 # Called when the node enters the scene tree for the first time.
@@ -26,16 +26,16 @@ func _ready() -> void:
 		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		%HeaderContainer.add_child(label)
 	
-	var curr_set = Globals.header_sets[current_header]
+	var curr_set = State.header_set(current_header)
 	
-	for module in curr_set.modules:
+	for module in curr_set.modules():
 		modules.append(module)
-		for sig in module.signals:
+		for sig in module.signals():
 			if not sig in signals:
 				signals.append(sig)
 	
 	for sig in signals:
-		Globals.connect(sig, _update_content)
+		State.connect(sig, _update_content)
 	
 	_update_content()
 	
@@ -45,9 +45,11 @@ func _update_content() -> void:
 		var mod = modules[i]
 		var text = ""
 		
-		match mod._name:
+		match mod.fname():
 			"bank":
-				text = mod.template % Globals.fnum(Globals.bank())
+				text = mod.template() % State.fnum(State.bank())
+			"cspeed":
+				text = mod.template() % State.fnum(State.cspeed())
 				
 
 		labels[i].text = text
