@@ -84,6 +84,11 @@ enum UpgradeType {
 	COutput,
 }
 
+enum UpgradeCategory {
+	Facility,
+	Crafting,
+}
+
 class Upgrade:
 	var _id: int
 	var _fname: String
