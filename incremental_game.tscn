@@ -55,9 +55,18 @@ size_flags_horizontal = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MainContent"]
 layout_mode = 2
 
-[node name="SideMenuButton" type="Button" parent="HBoxContainer/MainContent/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MainContent/HBoxContainer"]
 layout_mode = 2
-text = "Tog"
+
+[node name="SideMenuButton" type="Button" parent="HBoxContainer/MainContent/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = ">"
+
+[node name="HelpButton" type="Button" parent="HBoxContainer/MainContent/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "?"
 
 [node name="HeaderContainer" type="GridContainer" parent="HBoxContainer/MainContent/HBoxContainer"]
 unique_name_in_owner = true
@@ -70,5 +79,59 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
+[node name="PopupContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PopupContainer"]
+layout_mode = 2
+
+[node name="PopupTitleRect" type="ColorRect" parent="PopupContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="PopupTitle" type="Label" parent="PopupContainer/HBoxContainer/PopupTitleRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PopupTitle
+"
+
+[node name="PopupExit" type="Button" parent="PopupContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "x
+"
+
+[node name="PopupContentRect" type="ColorRect" parent="PopupContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="PopupContent" type="Label" parent="PopupContainer/PopupContentRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Testing the popup content"
+autowrap_mode = 2
+
 [connection signal="item_selected" from="HBoxContainer/SideMenu" to="PopupManager" method="_on_side_menu_item_selected"]
-[connection signal="pressed" from="HBoxContainer/MainContent/HBoxContainer/SideMenuButton" to="PopupManager" method="_on_side_menu_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MainContent/HBoxContainer/VBoxContainer/SideMenuButton" to="PopupManager" method="_on_side_menu_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/MainContent/HBoxContainer/VBoxContainer/HelpButton" to="PopupManager" method="_on_help_button_pressed"]
+[connection signal="pressed" from="PopupContainer/HBoxContainer/PopupExit" to="PopupManager" method="_on_popup_exit_button_pressed"]

@@ -2,6 +2,7 @@ extends Node
 
 # Signals
 signal screen_change(id: int)
+signal new_popup(title: String, text: String)
 
 signal bank_change
 signal facility_changed(id: int)
@@ -41,6 +42,9 @@ func _ready() -> void:
 
 func change_screen(index: int) -> void:
 	screen_change.emit(index)
+
+func create_popup(title: String, text: String) -> void:
+	new_popup.emit(title, text)
 
 #region Header
 func _ready_header():
@@ -153,7 +157,8 @@ func upgrades_type_to_category(type: Models.UpgradeType) -> Models.UpgradeCatego
 		Models.UpgradeType.COutput:
 			return Models.UpgradeCategory.Crafting
 			
-	return -1
+	push_error()
+	return Models.UpgradeCategory.Facility
 
 
 func upgrades_update_state(id: int, level: int, cost: float) -> void:

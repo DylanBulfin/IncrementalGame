@@ -16,6 +16,7 @@ func _ready() -> void:
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
+		preload("res://scenes/screens/dummy_screen.tscn"),
 	].map(func(sc): return sc.instantiate())
 	
 	for node in screen_nodes:
