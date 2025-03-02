@@ -18,7 +18,6 @@ var _header_sets: Array#[HeaderSetModel]
 var _screens: Array[String] = preload("res://resources/side_menu_items.tres").items
 var _facilities: Array[Models.Facility]
 
-var _upgrade_categories: Array[Models.UpgradeCategory]
 var _upgrades: Dictionary#[Models.UpgradeCategory, Array[Models.Upgrade]]
 var _all_upgrades: Array[Models.Upgrade]
 
@@ -28,7 +27,7 @@ func cspeed() -> float: return _cspeed
 func header_set(id: int) -> Models.HeaderSet: return _header_sets[id]
 func screens() -> Array[String]: return _screens
 func facilities() -> Array[Models.Facility]: return _facilities
-func upgrade_categories() -> Array: return _upgrades.keys()
+func upgrade_categories() -> Array: return Models.UpgradeCategory.keys()
 func upgrades_by_category(category: Models.UpgradeCategory) -> Array: return _upgrades[category]
 #endregion
 
@@ -137,10 +136,25 @@ func _ready_upgrades() -> void:
 		_all_upgrades.append(new_obj)
 
 func upgrades_type_to_category(type: Models.UpgradeType) -> Models.UpgradeCategory:
-	if type as int <= Models.UpgradeType.AllFacilitiesCost as int:
-		return Models.UpgradeCategory.Facility
-	else:
-		return Models.UpgradeCategory.Crafting
+	match type:
+		Models.UpgradeType.Facility1,\
+		Models.UpgradeType.Facility2,\
+		Models.UpgradeType.Facility3,\
+		Models.UpgradeType.Facility4,\
+		Models.UpgradeType.Facility5,\
+		Models.UpgradeType.Facility6,\
+		Models.UpgradeType.Facility7,\
+		Models.UpgradeType.Facility8,\
+		Models.UpgradeType.AllFacilitiesOutput,\
+		Models.UpgradeType.AllFacilitiesCost:
+			return Models.UpgradeCategory.Facility
+		
+		Models.UpgradeType.CSpeed,\
+		Models.UpgradeType.COutput:
+			return Models.UpgradeCategory.Crafting
+			
+	return -1
+
 
 func upgrades_update_state(id: int, level: int, cost: float) -> void:
 	var upgrade = _all_upgrades[id]

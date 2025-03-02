@@ -23,6 +23,7 @@ func _ready() -> void:
 	%GridContainer.add_child(level_label)
 	
 	update_text()
+	update_vis()
 
 func _on_upgrade_changed(id: int):
 	if id == base.id():
