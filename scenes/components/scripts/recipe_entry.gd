@@ -23,6 +23,9 @@ func _ready() -> void:
 func _on_cspeed_change() -> void:
 	update_text()
 
+func _pressed() -> void:
+	State.manufacturing_activate_recipe(base)
+
 func update_text() -> void:
 	%NameLabel.text = State.material_name(base.output())
 	%BankCostLabel.text = str("Bank Cost: ", State.fnum(base.bank_cost()))

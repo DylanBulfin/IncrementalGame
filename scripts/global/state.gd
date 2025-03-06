@@ -9,14 +9,17 @@ signal facility_changed(id: int)
 signal cspeed_change
 signal upgrade_changed(id: int)
 signal inventory_change # May want to add id arg later?
+signal recipe_change(recipe: Models.Recipe)
 
 # Globally-relevant variables
 var update_interval_s: float = 0.2
+var fast_craft_cutoff_s: float = 0.25
 
 var _curr_screen: int = 0
 
-var _bank: float = 1.0e12
-var _cspeed: float = 1.0 # Crafting/manufacturing speed
+var _bank: float = 100.0
+var _cspeed: float = 10.0 # Crafting/manufacturing speed
+var _coutput: float = 1.0 # Crafting/manufacturing output multi
 
 var _header_sets: Array#[HeaderSetModel]
 var _screens: Array[String] = preload("res://resources/side_menu_items.tres").items
@@ -32,6 +35,7 @@ var _recipes: Array#[Models.Recipe]
 #region Getters
 func bank() -> float: return _bank
 func cspeed() -> float: return _cspeed
+func coutput() -> float: return _coutput
 func header_set(id: int) -> Models.HeaderSet: return _header_sets[id]
 func curr_screen_title() -> String: return _screens[_curr_screen]
 func screens() -> Array[String]: return _screens
@@ -218,15 +222,15 @@ func _ready_manufacturing() -> void:
 			rec.output,
 		))
 
-func manufacturing_can_afford_materials(materials: Array[Models.MaterialCost]) -> bool:
+func manufacturing_can_afford_materials(materials: Array, n_times: float = 1) -> bool:
 	return materials \
-		.map(func(m): return _inventory_map[m.material()].count() >= m.count()) \
+		.map(func(m): return _inventory_map[m.material()].count() >= m.count() * n_times) \
 		.reduce(func(a, m): return a and m, true)
 
-func manufacturing_try_debit(materials: Array[Models.MaterialCost], bank_cost: float) -> bool:
-	if manufacturing_can_afford_materials(materials) and bank_try_debit(bank_cost):
+func manufacturing_try_debit(materials: Array, bank_cost: float, n_times: float = 1) -> bool:
+	if manufacturing_can_afford_materials(materials, n_times) and bank_try_debit(bank_cost * n_times):
 		for mc in materials:
-			_inventory_map[mc.material()]._count -= mc.count()
+			_inventory_map[mc.material()]._count -= mc.count() * n_times
 		inventory_change.emit()
 		return true
 	else: 
@@ -239,6 +243,9 @@ func manufacturing_credit_materials(material: Models.CraftingMaterial, count: fl
 func manufacturing_multiply_speed(factor: float) -> void:
 	_cspeed *= factor
 	cspeed_change.emit()
+
+func manufacturing_activate_recipe(recipe: Models.Recipe) -> void:
+	recipe_change.emit(recipe)
 #endregion
 
 #region Utils

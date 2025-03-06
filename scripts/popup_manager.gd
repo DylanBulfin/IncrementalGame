@@ -41,6 +41,8 @@ func _on_help_button_pressed() -> void:
 			text = "The R&D menu contains various upgrades you can purchase with proceeds from your facilities. The upgrades are separated into categories based on the system they primarily affect."
 		"Stock":
 			text = "The Stock menu contains your inventory of materials made in the manufacturing screen."
+		"Manufacturing":
+			text = "The Manufacturing menu allows you to craft recipes to gain materials."
 		_:
 			text = "This menu has not yet been implemented"
 	
