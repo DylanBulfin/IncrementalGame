@@ -115,3 +115,66 @@ class Upgrade:
 	func cost_ratio() -> float: return self._cost_ratio
 	func level() -> int: return self._level
 #endregion
+
+#region Crafting
+# Make materials, use those to make tokens, which buy powerups
+enum CraftingMaterial {
+	Wood,
+	Stone,
+	Copper,
+	Iron,
+	Silver,
+	Gold,
+	Platinum,
+	Diamond,
+	
+	WoodToken,
+	StoneToken,
+	CopperToken,
+	IronToken,
+	SilverToken,
+	GoldToken,
+	PlatinumToken,
+	DiamondToken,
+}
+
+class InventoryItem:
+	var _material: CraftingMaterial
+	var _material_name: String
+	var _count: float
+	
+	func _init(_material_: CraftingMaterial, _material_name_: String, _count_: float):
+		self._material = _material_
+		self._material_name = _material_name_
+		self._count = _count_
+	
+	func material() -> CraftingMaterial: return _material
+	func material_name() -> String: return _material_name
+	func count() -> float: return _count
+
+class MaterialCost:
+	var _material: CraftingMaterial
+	var _count: float
+	
+	func _init(_material_: CraftingMaterial, _count_: float):
+		self._material = _material_
+		self._count = _count_
+	
+	func material() -> CraftingMaterial: return _material
+	func count() -> float: return _count
+
+class Recipe:
+	var _bank_cost: float
+	var _material_costs: Array[MaterialCost]
+	var _output: CraftingMaterial
+	
+	func _init(_bank_cost_: float, _material_costs_: Array[MaterialCost], _output_: CraftingMaterial):
+		self._bank_cost = _bank_cost_
+		self._material_costs = _material_costs_
+		self._output = _output_
+	
+	func bank_cost() -> float: return _bank_cost
+	func material_costs() -> Array[MaterialCost]: return _material_costs
+	func output() -> CraftingMaterial: return _output
+	
+#endregion

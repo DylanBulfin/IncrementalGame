@@ -23,7 +23,19 @@ func _on_new_popup(title: String, text: String) -> void:
 	%PopupContainer.visible = true
 
 func _on_help_button_pressed() -> void:
-	State.create_popup("Testing", "Testing2")
+	var title: String = State.curr_screen_title()
+	var text: String
+	match title:
+		"Facilities":
+			text = "The facility menu shows the state of your power generation facilities. There are 8 types of facilities you can buy, and in general the more expensive the facility, the higher the output. When you buy a facility of a certain type, the next facility of that type will cost more."
+		"R&D":
+			text = "The R&D menu contains various upgrades you can purchase with proceeds from your facilities. The upgrades are separated into categories based on the system they primarily affect."
+		"Stock":
+			text = "The Stock menu contains your inventory of materials made in the manufacturing screen."
+		_:
+			text = "This menu has not yet been implemented"
+	
+	State.create_popup(title, text)
 
 func _on_popup_exit_button_pressed() -> void:
 	%PopupContainer.visible = false

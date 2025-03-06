@@ -4,4 +4,4 @@
 
 [resource]
 script = ExtResource("1_1wxhs")
-items = Array[String](["Facilities", "R&D", "Manufacturing", "Powerups", "Farming", "Awards", "Investors", "Prestige", "Settings"])
+items = Array[String](["Facilities", "R&D", "Stock", "Manufacturing", "Powerups", "Farming", "Awards", "Investors", "Prestige", "Settings"])

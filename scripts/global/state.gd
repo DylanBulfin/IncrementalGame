@@ -8,9 +8,12 @@ signal bank_change
 signal facility_changed(id: int)
 signal cspeed_change
 signal upgrade_changed(id: int)
+signal inventory_change # May want to add id arg later?
 
 # Globally-relevant variables
 var update_interval_s: float = 0.2
+
+var _curr_screen: int = 0
 
 var _bank: float = 1.0e12
 var _cspeed: float = 1.0 # Crafting/manufacturing speed
@@ -22,14 +25,19 @@ var _facilities: Array[Models.Facility]
 var _upgrades: Dictionary#[Models.UpgradeCategory, Array[Models.Upgrade]]
 var _all_upgrades: Array[Models.Upgrade]
 
+var _inventory: Array[Models.InventoryItem]
+var _inventory_map: Dictionary#[Models.CraftingMaterial, Models.InventoryItem]
+
 #region Getters
 func bank() -> float: return _bank
 func cspeed() -> float: return _cspeed
 func header_set(id: int) -> Models.HeaderSet: return _header_sets[id]
+func curr_screen_title() -> String: return _screens[_curr_screen]
 func screens() -> Array[String]: return _screens
 func facilities() -> Array[Models.Facility]: return _facilities
 func upgrade_categories() -> Array: return Models.UpgradeCategory.keys()
 func upgrades_by_category(category: Models.UpgradeCategory) -> Array: return _upgrades[category]
+func inventory() -> Array: return _inventory
 #endregion
 
 # Called when the node enters the scene tree for the first time.
@@ -37,10 +45,12 @@ func _ready() -> void:
 	_ready_facility()
 	_ready_header()
 	_ready_upgrades()
+	_ready_manufacturing()
 
 # Most global state functions below, mostly separated by category
 
 func change_screen(index: int) -> void:
+	_curr_screen = index
 	screen_change.emit(index)
 
 func create_popup(title: String, text: String) -> void:
@@ -183,6 +193,35 @@ func upgrades_update_state(id: int, level: int, cost: float) -> void:
 #endregion
 
 #region Manufacturing
+func _ready_manufacturing() -> void:
+	# Having both allows easier handling of diverse use cases
+	_inventory = []
+	_inventory_map = {}
+	# Loops through variant names of this enum
+	for cn in Models.CraftingMaterial.keys():
+		var cm = Models.CraftingMaterial[cn]
+		var ii = Models.InventoryItem.new(cm as Models.CraftingMaterial, cn, 0)
+		_inventory.push_back(ii)
+		_inventory_map[cm as Models.CraftingMaterial] = ii
+
+func manufacturing_can_afford_materials(materials: Array[Models.MaterialCost]) -> bool:
+	return materials \
+		.map(func(m): return _inventory_map[m.material()].count() >= m.count()) \
+		.reduce(func(a, m): return a and m, true)
+
+func manufacturing_try_debit(materials: Array[Models.MaterialCost], bank_cost: float) -> bool:
+	if manufacturing_can_afford_materials(materials) and bank_try_debit(bank_cost):
+		for mc in materials:
+			_inventory_map[mc.material()]._count -= mc.count()
+		inventory_change.emit()
+		return true
+	else: 
+		return false
+
+func manufacturing_credit_materials(material: Models.CraftingMaterial, count: float) -> void:
+	_inventory_map[material]._count += count
+	inventory_change.emit()
+
 func manufacturing_multiply_speed(factor: float) -> void:
 	_cspeed *= factor
 	cspeed_change.emit()
