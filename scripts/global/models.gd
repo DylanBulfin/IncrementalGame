@@ -165,16 +165,19 @@ class MaterialCost:
 
 class Recipe:
 	var _bank_cost: float
-	var _material_costs: Array[MaterialCost]
+	var _material_costs: Array#[MaterialCost]
+	var _time_cost_s: float
 	var _output: CraftingMaterial
 	
-	func _init(_bank_cost_: float, _material_costs_: Array[MaterialCost], _output_: CraftingMaterial):
+	func _init(_bank_cost_: float, _material_costs_: Array, _time_cost_s_: float, _output_: CraftingMaterial):
 		self._bank_cost = _bank_cost_
 		self._material_costs = _material_costs_
+		self._time_cost_s = _time_cost_s_
 		self._output = _output_
 	
 	func bank_cost() -> float: return _bank_cost
-	func material_costs() -> Array[MaterialCost]: return _material_costs
+	func material_costs() -> Array: return _material_costs
+	func time_cost_s() -> float: return _time_cost_s
 	func output() -> CraftingMaterial: return _output
 	
 #endregion

@@ -27,6 +27,7 @@ var _all_upgrades: Array[Models.Upgrade]
 
 var _inventory: Array[Models.InventoryItem]
 var _inventory_map: Dictionary#[Models.CraftingMaterial, Models.InventoryItem]
+var _recipes: Array#[Models.Recipe]
 
 #region Getters
 func bank() -> float: return _bank
@@ -38,6 +39,8 @@ func facilities() -> Array[Models.Facility]: return _facilities
 func upgrade_categories() -> Array: return Models.UpgradeCategory.keys()
 func upgrades_by_category(category: Models.UpgradeCategory) -> Array: return _upgrades[category]
 func inventory() -> Array: return _inventory
+func material_name(cm: Models.CraftingMaterial) -> String: return _inventory_map[cm].material_name()
+func recipes() -> Array: return _recipes
 #endregion
 
 # Called when the node enters the scene tree for the first time.
@@ -51,6 +54,7 @@ func _ready() -> void:
 
 func change_screen(index: int) -> void:
 	_curr_screen = index
+	
 	screen_change.emit(index)
 
 func create_popup(title: String, text: String) -> void:
@@ -203,6 +207,16 @@ func _ready_manufacturing() -> void:
 		var ii = Models.InventoryItem.new(cm as Models.CraftingMaterial, cn, 0)
 		_inventory.push_back(ii)
 		_inventory_map[cm as Models.CraftingMaterial] = ii
+		
+	# Parse recipes as well
+	for rec in preload("res://resources/manufacturing/recipes.tres").items:
+		
+		_recipes.push_back(Models.Recipe.new(
+			rec.bank_cost,
+			rec.material_costs.map(func(mc) -> Models.MaterialCost: return Models.MaterialCost.new(mc.material, mc.count)),
+			rec.time_cost_s,
+			rec.output,
+		))
 
 func manufacturing_can_afford_materials(materials: Array[Models.MaterialCost]) -> bool:
 	return materials \

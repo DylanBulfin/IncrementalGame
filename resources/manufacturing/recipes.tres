@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="Recipes" load_steps=12 format=3 uid="uid://b3gjbu886kh0p"]
+
+[ext_resource type="Script" path="res://resources/manufacturing/recipe.gd" id="1_aujtf"]
+[ext_resource type="Script" path="res://resources/manufacturing/material_cost.gd" id="2_bwc8g"]
+[ext_resource type="Script" path="res://resources/manufacturing/recipes.gd" id="2_wda6y"]
+
+[sub_resource type="Resource" id="Resource_vi7ju"]
+script = ExtResource("1_aujtf")
+bank_cost = 1.0
+material_costs = Array[ExtResource("2_bwc8g")]([])
+time_cost_s = 1.0
+output = 0
+
+[sub_resource type="Resource" id="Resource_laqi4"]
+script = ExtResource("2_bwc8g")
+material = 0
+count = 10.0
+
+[sub_resource type="Resource" id="Resource_n3lyl"]
+script = ExtResource("1_aujtf")
+bank_cost = 1000.0
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_laqi4")])
+time_cost_s = 10.0
+output = 1
+
+[sub_resource type="Resource" id="Resource_bvros"]
+script = ExtResource("2_bwc8g")
+material = 0
+count = 1.0
+
+[sub_resource type="Resource" id="Resource_8lsm6"]
+script = ExtResource("2_bwc8g")
+material = 1
+count = 2.0
+
+[sub_resource type="Resource" id="Resource_4kc5b"]
+script = ExtResource("2_bwc8g")
+material = 7
+count = 3.0
+
+[sub_resource type="Resource" id="Resource_q45jr"]
+script = ExtResource("2_bwc8g")
+material = 11
+count = 4.0
+
+[sub_resource type="Resource" id="Resource_hylhs"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+06
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_bvros"), SubResource("Resource_8lsm6"), SubResource("Resource_4kc5b"), SubResource("Resource_q45jr")])
+time_cost_s = 0.1
+output = 0
+
+[resource]
+script = ExtResource("2_wda6y")
+items = Array[ExtResource("1_aujtf")]([SubResource("Resource_vi7ju"), SubResource("Resource_n3lyl"), SubResource("Resource_hylhs")])

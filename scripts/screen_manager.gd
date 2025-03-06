@@ -11,7 +11,7 @@ func _ready() -> void:
 		preload("res://scenes/screens/facility_screen.tscn"),
 		preload("res://scenes/screens/upgrade_screen.tscn"),
 		preload("res://scenes/screens/inventory_screen.tscn"),
-		preload("res://scenes/screens/dummy_screen.tscn"),
+		preload("res://scenes/screens/crafting_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
@@ -27,14 +27,27 @@ func _ready() -> void:
 	
 	State.connect("screen_change", _on_screen_change)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
 func _on_screen_change(index: int) -> void:
 	if current_screen_index != index:
 		screen_nodes[current_screen_index].visible = false
 	
 	screen_nodes[index].visible = true
 	current_screen_index = index
+
+func _process(_delta: float) -> void:
+	check_action("screen1", func(): State.change_screen(0))
+	check_action("screen2", func(): State.change_screen(1))
+	check_action("screen3", func(): State.change_screen(2))
+	check_action("screen4", func(): State.change_screen(3))
+
+# If action is pressed, call the callback and unpress it
+func check_action(action: String, callback: Callable):
+	if Input.is_action_pressed(action):
+		callback.call()
+		
+		# Unpress button
+		var ev = InputEventAction.new()
+		ev.action = action
+		ev.pressed = false
+		# Feedback.
+		Input.parse_input_event(ev)

@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" path="res://scenes/components/scripts/inventory_entry.gd" id="1_q7u5n"]
 
-[node name="InventoryEntry" type="Button"]
+[node name="InventoryEntry" type="ColorRect"]
 custom_minimum_size = Vector2(120, 80)
-offset_right = 8.0
-offset_bottom = 8.0
+offset_right = 120.0
+offset_bottom = 80.0
 size_flags_horizontal = 3
+color = Color(0.180392, 0.180392, 0.180392, 1)
 script = ExtResource("1_q7u5n")
 
 [node name="GridContainer" type="GridContainer" parent="."]

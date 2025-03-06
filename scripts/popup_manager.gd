@@ -9,12 +9,21 @@ func _on_side_menu_button_pressed() -> void:
 	%SideMenu.visible = true
 	%MainContent.visible = false
 
-
 func _on_side_menu_item_selected(index: int) -> void:
 	%SideMenu.visible = false
 	%MainContent.visible = true
 	
-	State.change_screen(index)
+	var ev = InputEventAction.new()
+	# Set as ui_left, pressed.
+	match index:
+		0: ev.action = "screen1"
+		1: ev.action = "screen2"
+		2: ev.action = "screen3"
+		_: ev.action = "screen4"
+	
+	ev.pressed = true
+	# Feedback.
+	Input.parse_input_event(ev)
 
 func _on_new_popup(title: String, text: String) -> void:
 	%PopupTitle.text = title
