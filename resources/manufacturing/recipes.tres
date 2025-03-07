@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Recipes" load_steps=12 format=3 uid="uid://b3gjbu886kh0p"]
+[gd_resource type="Resource" script_class="Recipes" load_steps=19 format=3 uid="uid://b3gjbu886kh0p"]
 
 [ext_resource type="Script" uid="uid://io7c6lvbfre1" path="res://resources/manufacturing/recipe.gd" id="1_aujtf"]
 [ext_resource type="Script" uid="uid://di3rgu0p1o4mx" path="res://resources/manufacturing/material_cost.gd" id="2_bwc8g"]
@@ -6,7 +6,7 @@
 
 [sub_resource type="Resource" id="Resource_vi7ju"]
 script = ExtResource("1_aujtf")
-bank_cost = 1.0
+bank_cost = 1e+30
 material_costs = Array[ExtResource("2_bwc8g")]([])
 time_cost_s = 1.0
 output = 0
@@ -18,38 +18,94 @@ count = 10.0
 
 [sub_resource type="Resource" id="Resource_n3lyl"]
 script = ExtResource("1_aujtf")
-bank_cost = 1000.0
+bank_cost = 1e+33
 material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_laqi4")])
 time_cost_s = 10.0
 output = 1
 
-[sub_resource type="Resource" id="Resource_bvros"]
-script = ExtResource("2_bwc8g")
-material = 0
-count = 1.0
-
-[sub_resource type="Resource" id="Resource_8lsm6"]
+[sub_resource type="Resource" id="Resource_ah3nx"]
 script = ExtResource("2_bwc8g")
 material = 1
-count = 2.0
-
-[sub_resource type="Resource" id="Resource_4kc5b"]
-script = ExtResource("2_bwc8g")
-material = 7
-count = 3.0
-
-[sub_resource type="Resource" id="Resource_q45jr"]
-script = ExtResource("2_bwc8g")
-material = 11
-count = 4.0
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
 
 [sub_resource type="Resource" id="Resource_hylhs"]
 script = ExtResource("1_aujtf")
-bank_cost = 1e+06
-material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_bvros"), SubResource("Resource_8lsm6"), SubResource("Resource_4kc5b"), SubResource("Resource_q45jr")])
-time_cost_s = 0.1
-output = 0
+bank_cost = 1e+36
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_ah3nx")])
+time_cost_s = 100.0
+output = 2
+
+[sub_resource type="Resource" id="Resource_3grgm"]
+script = ExtResource("2_bwc8g")
+material = 2
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
+
+[sub_resource type="Resource" id="Resource_4wdje"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+39
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_3grgm")])
+time_cost_s = 1000.0
+output = 3
+metadata/_custom_type_script = "uid://io7c6lvbfre1"
+
+[sub_resource type="Resource" id="Resource_uowie"]
+script = ExtResource("2_bwc8g")
+material = 3
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
+
+[sub_resource type="Resource" id="Resource_70ut3"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+42
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_uowie")])
+time_cost_s = 10000.0
+output = 4
+metadata/_custom_type_script = "uid://io7c6lvbfre1"
+
+[sub_resource type="Resource" id="Resource_rpyox"]
+script = ExtResource("2_bwc8g")
+material = 4
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
+
+[sub_resource type="Resource" id="Resource_1x3ha"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+45
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_rpyox")])
+time_cost_s = 100000.0
+output = 5
+metadata/_custom_type_script = "uid://io7c6lvbfre1"
+
+[sub_resource type="Resource" id="Resource_41hg0"]
+script = ExtResource("2_bwc8g")
+material = 5
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
+
+[sub_resource type="Resource" id="Resource_54538"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+48
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_41hg0")])
+time_cost_s = 1e+06
+output = 6
+metadata/_custom_type_script = "uid://io7c6lvbfre1"
+
+[sub_resource type="Resource" id="Resource_qqthc"]
+script = ExtResource("2_bwc8g")
+material = 6
+count = 10.0
+metadata/_custom_type_script = "uid://di3rgu0p1o4mx"
+
+[sub_resource type="Resource" id="Resource_mok76"]
+script = ExtResource("1_aujtf")
+bank_cost = 1e+51
+material_costs = Array[ExtResource("2_bwc8g")]([SubResource("Resource_qqthc")])
+time_cost_s = 1e+07
+output = 7
+metadata/_custom_type_script = "uid://io7c6lvbfre1"
 
 [resource]
 script = ExtResource("2_wda6y")
-items = Array[ExtResource("1_aujtf")]([SubResource("Resource_vi7ju"), SubResource("Resource_n3lyl"), SubResource("Resource_hylhs")])
+items = Array[ExtResource("1_aujtf")]([SubResource("Resource_vi7ju"), SubResource("Resource_n3lyl"), SubResource("Resource_hylhs"), SubResource("Resource_4wdje"), SubResource("Resource_70ut3"), SubResource("Resource_1x3ha"), SubResource("Resource_54538"), SubResource("Resource_mok76")])
