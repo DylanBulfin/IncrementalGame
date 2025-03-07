@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="HeaderModules" load_steps=5 format=3 uid="uid://bm4agierbvtph"]
 
-[ext_resource type="Script" path="res://resources/headers/header_module.gd" id="1_4q8fy"]
-[ext_resource type="Script" path="res://resources/headers/header_modules.gd" id="2_vrm7e"]
+[ext_resource type="Script" uid="uid://oqqn0sp5w345" path="res://resources/headers/header_module.gd" id="1_4q8fy"]
+[ext_resource type="Script" uid="uid://bo2mitjmfr6rt" path="res://resources/headers/header_modules.gd" id="2_vrm7e"]
 
 [sub_resource type="Resource" id="Resource_21bis"]
 script = ExtResource("1_4q8fy")

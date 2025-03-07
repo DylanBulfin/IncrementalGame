@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlqwdlv1woyub"]
 
-[ext_resource type="Script" path="res://scenes/screens/scripts/crafting_screen.gd" id="1_5v4mo"]
+[ext_resource type="Script" uid="uid://bmbc68oahbjt6" path="res://scenes/screens/scripts/crafting_screen.gd" id="1_5v4mo"]
 
 [node name="CraftingScreen" type="Control"]
 layout_mode = 3

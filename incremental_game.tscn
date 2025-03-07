@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://60fhdbf847vb"]
 
-[ext_resource type="Script" path="res://scripts/incremental_game.gd" id="1_jqi77"]
-[ext_resource type="Script" path="res://scripts/screen_manager.gd" id="2_tnsj2"]
-[ext_resource type="Script" path="res://scenes/components/scripts/side_menu.gd" id="3_i1ats"]
-[ext_resource type="Script" path="res://scripts/popup_manager.gd" id="3_qhrio"]
-[ext_resource type="Script" path="res://scripts/header_manager.gd" id="4_wcaps"]
+[ext_resource type="Script" uid="uid://bc1ihmvtxedbx" path="res://scripts/incremental_game.gd" id="1_jqi77"]
+[ext_resource type="Script" uid="uid://pkdotw8jfipn" path="res://scripts/screen_manager.gd" id="2_tnsj2"]
+[ext_resource type="Script" uid="uid://cath35p3bq6u7" path="res://scenes/components/scripts/side_menu.gd" id="3_i1ats"]
+[ext_resource type="Script" uid="uid://clmouaettnoox" path="res://scripts/popup_manager.gd" id="3_qhrio"]
+[ext_resource type="Script" uid="uid://d04itk4nsjwg3" path="res://scripts/header_manager.gd" id="4_wcaps"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tnwp"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)

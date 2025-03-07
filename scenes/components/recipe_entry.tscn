@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckp0ig21n88x0"]
 
-[ext_resource type="Script" path="res://scenes/components/scripts/recipe_entry.gd" id="1_xh7ur"]
+[ext_resource type="Script" uid="uid://bbw4uc1x32f3g" path="res://scenes/components/scripts/recipe_entry.gd" id="1_xh7ur"]
 
 [node name="RecipeEntry" type="Button"]
 offset_right = 8.0

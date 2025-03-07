@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cw12pj88ccvsp"]
 
-[ext_resource type="Script" path="res://scenes/screens/scripts/facility_screen.gd" id="1_j1x7o"]
+[ext_resource type="Script" uid="uid://b2cq4spaubm3c" path="res://scenes/screens/scripts/facility_screen.gd" id="1_j1x7o"]
 
 [node name="FacilityScreen" type="Control"]
 layout_mode = 3
