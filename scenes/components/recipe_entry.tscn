@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://scenes/components/scripts/recipe_entry.gd" id="1_xh7ur"]
 
 [node name="RecipeEntry" type="Button"]
-custom_minimum_size = Vector2(0, 160)
 offset_right = 8.0
 offset_bottom = 8.0
 size_flags_horizontal = 3
@@ -25,6 +24,10 @@ layout_mode = 2
 text = "Bank Cost"
 
 [node name="MaterialCostContainer" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CountLabel" type="Label" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 

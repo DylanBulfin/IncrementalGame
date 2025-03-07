@@ -52,7 +52,7 @@ func _pressed() -> void:
 func update_text() -> void:
 	name_label.text = base.fname()
 	cost_label.text = str("Cost: ", State.fnum(base.cost()))
-	output_label.text = str("Output: ", State.fnum(base.output()))
+	output_label.text = str("Output: ", State.fnum(base.output() * base.material_multi()))
 	percent_label.text = str(State.fnum(base.percent()), "%")
 	count_label.text = str("Count: ", base.count())
 

@@ -19,6 +19,7 @@ func _ready() -> void:
 		%RecipeContainer.add_child(node)
 	
 	State.connect("recipe_change", _on_recipe_change)
+	%StopButton.connect("pressed", _on_stop_pressed)
 	
 func _process(delta: float) -> void:
 	if is_active and is_fast:
@@ -28,6 +29,9 @@ func _process(delta: float) -> void:
 		if State.manufacturing_try_debit(curr_recipe.material_costs(), curr_recipe.bank_cost(), delta * rec_per_s):
 			State.manufacturing_credit_materials(curr_recipe.output(), total_output)
 
+func _on_stop_pressed() -> void:
+	cancel_recipe()
+
 func _on_recipe_change(recipe: Models.Recipe) -> void:
 	# Assume that any new recipe is not fast
 	is_fast = false
@@ -35,11 +39,6 @@ func _on_recipe_change(recipe: Models.Recipe) -> void:
 	if recipe == curr_recipe:
 		# Pressed the same recipe that's active, deactivate it instead
 		cancel_recipe()
-		is_active = false
-		curr_recipe = null
-
-		%CraftingProgressLabel.text = "Crafting: Nothing"
-
 		return
 		
 	var rec_time = recipe.time_cost_s() / State.cspeed()
@@ -48,17 +47,23 @@ func _on_recipe_change(recipe: Models.Recipe) -> void:
 		# Disable the current recipe and refund resources
 		cancel_recipe()
 		
-	if rec_time >= 0.25:
+	if rec_time >= State.fast_craft_cutoff_s:
 		# If time is high enough we can just use tweeners and callbacks
 		init_tween(rec_time)
+		%CraftingProgressLabel.text = str("Crafting: ", State.material_name(recipe.output()))
 	# If time is less than this we will calculate the output in the process function
 	else:
 		is_fast = true
+		%CraftingProgress.value = 100
+		%CraftingProgressLabel.text = str(
+			"Crafting: ",
+			State.material_name(recipe.output()),
+			"\n",
+			State.fnum(1 / rec_time),
+			" recipes per second")
 
 	is_active = true
 	curr_recipe = recipe
-	
-	%CraftingProgressLabel.text = str("Crafting: ", State.material_name(curr_recipe.output()))
 	
 	State.manufacturing_try_debit(curr_recipe.material_costs(), curr_recipe.bank_cost())
 
@@ -75,11 +80,22 @@ func kill_tween() -> void:
 	%CraftingProgress.value = 0
 
 func cancel_recipe() -> void:
-	# Disable the current recipe and refund resources
-	State.bank_credit(curr_recipe.bank_cost())
-	for mc in curr_recipe.material_costs():
-		State.manufacturing_credit_materials(mc.material(), mc.count())
-	kill_tween()
+	if is_fast:
+		# Just need to set to inactive, as resources are taken out at the 
+		# same time as they are added
+		is_fast = false
+	else:
+		# Disable the current recipe and refund resources
+		if curr_recipe != null:
+			State.bank_credit(curr_recipe.bank_cost())
+			for mc in curr_recipe.material_costs():
+				State.manufacturing_credit_materials(mc.material(), mc.count())
+			kill_tween()
+		
+	is_active = false
+	curr_recipe = null
+	%CraftingProgress.value = 0
+	%CraftingProgressLabel.text = "Crafting: Nothing"
 	
 
 func process_recipe_completion():

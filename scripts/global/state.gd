@@ -7,6 +7,7 @@ signal new_popup(title: String, text: String)
 signal bank_change
 signal facility_changed(id: int)
 signal cspeed_change
+signal coutput_change
 signal upgrade_changed(id: int)
 signal inventory_change # May want to add id arg later?
 signal recipe_change(recipe: Models.Recipe)
@@ -44,6 +45,7 @@ func upgrade_categories() -> Array: return Models.UpgradeCategory.keys()
 func upgrades_by_category(category: Models.UpgradeCategory) -> Array: return _upgrades[category]
 func inventory() -> Array: return _inventory
 func material_name(cm: Models.CraftingMaterial) -> String: return _inventory_map[cm].material_name()
+func material_count(cm: Models.CraftingMaterial) -> float: return _inventory_map[cm].count()
 func recipes() -> Array: return _recipes
 #endregion
 
@@ -131,7 +133,9 @@ func facility_update_percent(id: int, percent: float) -> void:
 func facility_apply_multiplier(id: int, multi: float) -> void:
 	_facilities[id]._output *= multi
 	facility_changed.emit(id)
-	
+
+func facility_set_material_multiplier(id: int, multi: float) -> void:
+	_facilities[id]._material_multi = multi
 #endregion
 
 #region Upgrades
@@ -243,6 +247,10 @@ func manufacturing_credit_materials(material: Models.CraftingMaterial, count: fl
 func manufacturing_multiply_speed(factor: float) -> void:
 	_cspeed *= factor
 	cspeed_change.emit()
+
+func manufacturing_multiply_output(factor: float) -> void:
+	_coutput *= factor
+	coutput_change.emit()
 
 func manufacturing_activate_recipe(recipe: Models.Recipe) -> void:
 	recipe_change.emit(recipe)

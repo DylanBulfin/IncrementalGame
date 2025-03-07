@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	
 	# It looks awful if you update every frame
 	if dd >= State.update_interval_s:
-		var outputs = State.facilities().map(func(f): return f.count() * f.output() * dd)
+		var outputs = State.facilities().map(func(f): return f.material_multi() * f.count() * f.output() * dd)
 		var total = outputs.reduce(func(a,b): return a+b)
 
 		for i in range(len(outputs)):

@@ -41,8 +41,9 @@ class Facility:
 	var _hnds_multi: float
 	
 	var _percent: float = 0
+	var _material_multi: float = 1.0
 
-	func _init(_id_: int, _fname_: String, _cost_: float, _output_: float, _cost_ratio_: float, _tens_multi_: float, _hnds_multi_: float, _count_: int = 0):
+	func _init(_id_: int, _fname_: String, _cost_: float, _output_: float, _cost_ratio_: float, _tens_multi_: float, _hnds_multi_: float, _count_: int = 0, _material_multi_: float = 1.0):
 		self._id = _id_
 		self._fname = _fname_
 		self._cost = _cost_
@@ -51,6 +52,7 @@ class Facility:
 		self._count = _count_
 		self._tens_multi = _tens_multi_
 		self._hnds_multi = _hnds_multi_
+		self._material_multi = _material_multi_
 	
 	func id() -> int: return self._id
 	func fname() -> String: return self._fname
@@ -61,6 +63,7 @@ class Facility:
 	func tens_multi() -> float: return self._tens_multi
 	func hnds_multi() -> float: return self._hnds_multi
 	func percent() -> float: return self._percent
+	func material_multi() -> float: return self._material_multi
 #endregion
 
 #region Upgrades
