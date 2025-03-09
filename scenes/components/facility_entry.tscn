@@ -13,6 +13,7 @@ anchor_right = 1.0
 offset_bottom = 30.0
 grow_horizontal = 2
 size_flags_vertical = 3
+mouse_filter = 1
 theme_override_styles/hover = SubResource("StyleBoxFlat_iwdhv")
 script = ExtResource("1_o438y")
 

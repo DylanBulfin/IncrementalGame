@@ -5,6 +5,7 @@ signal screen_change(id: int)
 signal new_popup(title: String, text: String)
 
 signal bank_change
+signal buy_quant_change
 signal facility_changed(id: int)
 signal cspeed_change
 signal coutput_change
@@ -136,6 +137,7 @@ func increment_buy_quant() -> void:
 		Models.BuyQuant.OneX: _buy_quant = Models.BuyQuant.TenX
 		Models.BuyQuant.TenX: _buy_quant = Models.BuyQuant.HundX
 		Models.BuyQuant.HundX: _buy_quant = Models.BuyQuant.OneX
+	buy_quant_change.emit()
 
 
 func buy_count() -> int:

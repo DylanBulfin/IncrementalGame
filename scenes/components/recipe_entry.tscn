@@ -7,6 +7,7 @@ clip_contents = true
 offset_right = 8.0
 offset_bottom = 8.0
 size_flags_horizontal = 3
+mouse_filter = 1
 script = ExtResource("1_xh7ur")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
