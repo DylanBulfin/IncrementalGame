@@ -135,8 +135,11 @@ class Facility:
 		if dict.has("percent"): _percent = dict["percent"]
 		if dict.has("material_multi"): _material_multi = dict["material_multi"]
 
-
-
+enum BuyQuant {
+	OneX,
+	TenX,
+	HundX,
+}
 
 #endregion
 

@@ -10,8 +10,8 @@ func _ready() -> void:
 	screen_nodes = [
 		preload("res://scenes/screens/facility_screen.tscn"),
 		preload("res://scenes/screens/upgrade_screen.tscn"),
-		preload("res://scenes/screens/inventory_screen.tscn"),
 		preload("res://scenes/screens/crafting_screen.tscn"),
+		preload("res://scenes/screens/inventory_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),

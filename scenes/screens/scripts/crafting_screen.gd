@@ -24,6 +24,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	%StopButton.disabled = !is_active
 	if is_active and is_fast:
 		# TODO this will fail if you have enough for 1 recipe but not enough for a frame's worth.
 		# May not matter in the long run but i should fix it anyway

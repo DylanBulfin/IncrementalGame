@@ -12,6 +12,7 @@ func _ready() -> void:
 		node.base = facility
 		%FacilityContainer.add_child(node)
 
+	set_button_text()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -32,3 +33,14 @@ func _process(delta: float) -> void:
 			State.bank_credit(total)
 	
 		last_update = total_delta
+
+func _on_buy_quant_button_pressed() -> void:
+	State.increment_buy_quant()
+	set_button_text()
+
+func set_button_text() -> void:
+	match State.buy_quant():
+		Models.BuyQuant.OneX: %BuyQuantButton.text = "1x"
+		Models.BuyQuant.TenX: %BuyQuantButton.text = "10x"
+		Models.BuyQuant.HundX: %BuyQuantButton.text = "100x"
+		

@@ -19,6 +19,8 @@ var default_save_name: String = "savegame.save"
 
 var _curr_screen: int = 0
 
+var _buy_quant: Models.BuyQuant = Models.BuyQuant.OneX
+
 var _bank: float = 1.0
 var _cspeed: float = 1.0  # Crafting/manufacturing speed
 var _coutput: float = 1.0  # Crafting/manufacturing output multi
@@ -54,6 +56,10 @@ func header_set(id: int) -> Models.HeaderSet:
 
 func curr_screen_title() -> String:
 	return _screens[_curr_screen]
+
+
+func buy_quant() -> Models.BuyQuant:
+	return _buy_quant
 
 
 func screens() -> Array[String]:
@@ -123,6 +129,24 @@ func change_screen(index: int) -> void:
 
 func create_popup(title: String, text: String) -> void:
 	new_popup.emit(title, text)
+
+
+func increment_buy_quant() -> void:
+	match _buy_quant:
+		Models.BuyQuant.OneX: _buy_quant = Models.BuyQuant.TenX
+		Models.BuyQuant.TenX: _buy_quant = Models.BuyQuant.HundX
+		Models.BuyQuant.HundX: _buy_quant = Models.BuyQuant.OneX
+
+
+func buy_count() -> int:
+	match State.buy_quant():
+		Models.BuyQuant.OneX: return 1
+		Models.BuyQuant.TenX: return 10
+		Models.BuyQuant.HundX: return 100
+		_: return 1
+
+func get_total_cost(cost_1: float, cost_ratio: float) -> float:
+	return cost_1 * ((cost_ratio ** buy_count()) - 1) / (cost_ratio - 1)
 
 
 #region Header
@@ -350,7 +374,7 @@ func fnum(n: float) -> String:
 		return str(n)
 	elif abs(n) < 1_000:
 		if float(int(n)) == n:
-			return str(n)
+			return str(n as int)
 		else:
 			return str(fstr % n)
 	else:
@@ -369,6 +393,9 @@ func fnum(n: float) -> String:
 			# This indicates dec is 10.00 
 			power += 1
 			dec /= 10
+		
+		# Reassign since dec may have changed
+		dec_fstr = fstr % dec
 		
 		# Gets part of string after decimal
 		if dec_fstr.substr(2) == "00":
@@ -423,7 +450,7 @@ func load_game(path: String = get_user_path()):
 			for i in range(len(dicts)):
 				_inventory[i].update_from_dict(dicts[i])
 
-	if save_dict.has("all_upgrades"):
+	if save_dict.has("upgrades"):
 		var dicts: Array = save_dict["upgrades"]
 		
 		if len(dicts) == len(_all_upgrades):
