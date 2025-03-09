@@ -107,6 +107,36 @@ class Facility:
 	func material_multi() -> float:
 		return self._material_multi
 
+	func to_dict() -> Dictionary:
+		var save_dict = {
+			#"id": _id,
+			#"fname": _fname,
+			"cost": _cost,
+			"output": _output,
+			#"cost_ratio": _cost_ratio,
+			"count": _count,
+			#"tens_multi": _tens_multi,
+			#"hnds_multi": _hnds_multi,
+			"percent": _percent,
+			"material_multi": _material_multi,
+		}
+		
+		return save_dict
+	
+	func update_from_dict(dict: Dictionary) -> void:
+		#if dict.has("id"): _id = dict["id"]
+		#if dict.has("fname"): _fname = dict["fname"]
+		if dict.has("cost"): _cost = dict["cost"]
+		if dict.has("output"): _output = dict["output"]
+		#if dict.has("cost_ratio"): _cost_ratio = dict["cost_ratio"]
+		if dict.has("count"): _count = dict["count"]
+		#if dict.has("tens_multi"): _tens_multi = dict["tens_multi"]
+		#if dict.has("hnds_multi"): _hnds_multi = dict["hnds_multi"]
+		if dict.has("percent"): _percent = dict["percent"]
+		if dict.has("material_multi"): _material_multi = dict["material_multi"]
+
+
+
 
 #endregion
 
@@ -182,6 +212,28 @@ class Upgrade:
 	func level() -> int:
 		return self._level
 
+	func to_dict() -> Dictionary:
+		return {
+			#"id": _id,
+			#"fname": _fname,
+			"cost": _cost,
+			#"type": _type,
+			#"multiplier": _multiplier,
+			#"cost_ratio": _cost_ratio,
+			"level": _level,
+		}
+	
+	func update_from_dict(dict: Dictionary) -> void:
+		#if dict.has("id"): _id = dict["id"]
+		#if dict.has("fname"): _fname = dict["fname"]
+		if dict.has("cost"): _cost = dict["cost"]
+		#if dict.has("type"): _type = dict["type"]
+		#if dict.has("multiplier"): _multiplier = dict["multiplier"]
+		#if dict.has("cost_ratio"): _cost_ratio = dict["cost_ratio"]
+		if dict.has("level"): 
+			_level = dict["level"]
+
+
 
 #endregion
 
@@ -225,7 +277,18 @@ class InventoryItem:
 
 	func count() -> float:
 		return _count
-
+	
+	func to_dict() -> Dictionary:
+		return {
+			#"material": _material,
+			#"material_name": _material_name,
+			"count": _count
+		}
+	
+	func update_from_dict(dict: Dictionary) -> void:
+		#if dict.has("material"): _material = dict["material"]
+		#if dict.has("material_name"): _material_name = dict["material_name"]
+		if dict.has("count"): _count = dict["count"]
 
 class MaterialCost:
 	var _material: CraftingMaterial

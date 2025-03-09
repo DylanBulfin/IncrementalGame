@@ -17,6 +17,7 @@ func _ready() -> void:
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
 		preload("res://scenes/screens/dummy_screen.tscn"),
+		preload("res://scenes/screens/settings_screen.tscn"),
 	].map(func(sc): return sc.instantiate())
 	
 	for node in screen_nodes:
@@ -39,6 +40,8 @@ func _process(_delta: float) -> void:
 	check_action("screen2", func(): State.change_screen(1))
 	check_action("screen3", func(): State.change_screen(2))
 	check_action("screen4", func(): State.change_screen(3))
+	
+	check_action("screen10", func(): State.change_screen(9))
 
 # If action is pressed, call the callback and unpress it
 func check_action(action: String, callback: Callable):

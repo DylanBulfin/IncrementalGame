@@ -6,6 +6,7 @@
 bg_color = Color(0.113725, 0.133333, 0.160784, 1)
 
 [node name="FacilityEntry" type="Button"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 80)
 anchors_preset = 10
 anchor_right = 1.0

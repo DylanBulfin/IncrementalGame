@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://rbk4ogdl8j6y" path="res://scenes/components/scripts/upgrade_entry.gd" id="1_ke732"]
 
 [node name="UpgradeEntry" type="Button"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 107)
 anchors_preset = 15
 anchor_right = 1.0

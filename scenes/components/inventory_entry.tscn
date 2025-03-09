@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b6yskv1bifepr" path="res://scenes/components/scripts/inventory_entry.gd" id="1_q7u5n"]
 
 [node name="InventoryEntry" type="ColorRect"]
+clip_contents = true
 custom_minimum_size = Vector2(120, 100)
 offset_right = 120.0
 offset_bottom = 80.0

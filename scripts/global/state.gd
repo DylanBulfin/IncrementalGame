@@ -15,11 +15,12 @@ signal recipe_change(recipe: Models.Recipe)
 # Globally-relevant variables
 var update_interval_s: float = 0.2
 var fast_craft_cutoff_s: float = 0.25
+var default_save_name: String = "savegame.save"
 
 var _curr_screen: int = 0
 
-var _bank: float = 100.0
-var _cspeed: float = 10.0  # Crafting/manufacturing speed
+var _bank: float = 1.0
+var _cspeed: float = 1.0  # Crafting/manufacturing speed
 var _coutput: float = 1.0  # Crafting/manufacturing output multi
 
 var _header_sets: Array  #[HeaderSetModel]
@@ -96,7 +97,20 @@ func _ready() -> void:
 	_ready_header()
 	_ready_upgrades()
 	_ready_manufacturing()
+	
+	if FileAccess.file_exists(get_user_path()):
+		load_game()
+	
+	# Don't use default quit behavior, override it so I can save on exit
+	get_tree().set_auto_accept_quit(false)
 
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		# Desktop/web 
+		save_game()
+		get_tree().quit()
+	elif what == NOTIFICATION_APPLICATION_PAUSED:
+		save_game()
 
 # Most global state functions below, mostly separated by category
 
@@ -340,20 +354,84 @@ func fnum(n: float) -> String:
 		else:
 			return str(fstr % n)
 	else:
-		var power = floor(log(abs(n)) / log(10))
-		var dec = n / (10 ** power)
+		var power: float = floor(log(abs(n)) / log(10))
+		var dec: float = n / (10 ** power)
+		
+		var dec_fstr = fstr % dec
 
 		# Floating-point math is inherently inexact so this checks
 		# for errors
-		if dec < 1:
+		if dec_fstr[0] == '0':
+			# Indicates dec is 0.99999999 or something
 			power -= 1
 			dec *= 10
-		if dec >= 10:
+		if len(dec_fstr) == 5:
+			# This indicates dec is 10.00 
 			power += 1
 			dec /= 10
-
-		if float(int(dec)) == dec:
-			return str(dec, "e", power)
+		
+		# Gets part of string after decimal
+		if dec_fstr.substr(2) == "00":
+			# Looks better to show as int
+			return str(dec_fstr[0], "e", power as int)
 		else:
-			return str(fstr % dec, "e", power)
+			return str(dec_fstr, "e", power as int)
+
+func get_user_path(path: String = default_save_name) -> String:
+	return str("user://", path)
+
+func save_game(path: String = get_user_path()):
+	var save_dict := {
+		"bank": _bank,
+		"cspeed": _cspeed,
+		"coutput": _coutput,
+		
+		"facilities": _facilities.map(func(e): return e.to_dict()),
+		"inventory": _inventory.map(func(e): return e.to_dict()),
+		"upgrades": _all_upgrades.map(func(e): return e.to_dict())
+	}
+	
+	var save_file = FileAccess.open(path, FileAccess.WRITE)
+
+	# JSON provides a static method to serialized JSON string.
+	var json_string = JSON.stringify(save_dict)
+
+	# Store the save dictionary as a new line in the save file.
+	save_file.store_line(json_string)
+	save_file.flush()
+
+func load_game(path: String = get_user_path()):
+	var save_file = FileAccess.open(path, FileAccess.READ)
+	
+	var save_dict: Dictionary = JSON.parse_string(save_file.get_line())
+	
+	if save_dict.has("bank"): _bank = save_dict["bank"]
+	if save_dict.has("cspeed"): _cspeed = save_dict["cspeed"]
+	if save_dict.has("coutput"): _coutput = save_dict["coutput"]
+
+	if save_dict.has("facilities"):
+		var dicts: Array = save_dict["facilities"]
+		
+		if len(dicts) == len(_facilities):
+			for i in range(len(dicts)):
+				_facilities[i].update_from_dict(dicts[i])
+
+	if save_dict.has("inventory"):
+		var dicts: Array = save_dict["inventory"]
+		
+		if len(dicts) == len(_inventory):
+			for i in range(len(dicts)):
+				_inventory[i].update_from_dict(dicts[i])
+
+	if save_dict.has("all_upgrades"):
+		var dicts: Array = save_dict["upgrades"]
+		
+		if len(dicts) == len(_all_upgrades):
+			for i in range(len(dicts)):
+				_all_upgrades[i].update_from_dict(dicts[i])
+
+# Returns true if file existed
+func reset_save(path: String = get_user_path()) -> bool:
+	return DirAccess.remove_absolute(path) == OK
+
 #endregion
