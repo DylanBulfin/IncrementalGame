@@ -71,6 +71,10 @@ func facilities() -> Array[Models.Facility]:
 	return _facilities
 
 
+func all_upgrades() -> Array:
+	return _all_upgrades
+
+
 func upgrade_categories() -> Array:
 	return Models.UpgradeCategory.keys()
 

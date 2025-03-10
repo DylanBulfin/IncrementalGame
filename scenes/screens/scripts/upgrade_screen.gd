@@ -48,3 +48,16 @@ func _on_pressed(button: BaseButton) -> void:
 		%UpgradeContainer.remove_child(child)
 	for node in upgrade_nodes[category]:
 		%UpgradeContainer.add_child(node)
+
+func _on_buy_all_button_pressed() -> void:
+	for i in range(len(State.all_upgrades())):
+		var upgrade = State.all_upgrades()[i]
+		# Instead of updating the count each time we keep track and add at once
+		var cached_level: int = upgrade.level()
+		var cached_cost: float = upgrade.cost()
+		while State.bank_try_debit(cached_cost):
+			cached_level += 1
+			cached_cost *= upgrade.cost_ratio()
+		
+		State.upgrades_update_state(i, cached_level, cached_cost)
+			
