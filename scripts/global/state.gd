@@ -237,6 +237,14 @@ func facility_apply_multiplier(id: int, multi: float) -> void:
 	facility_changed.emit(id)
 
 
+func facility_set_count_multiplier(id: int, multi: float) -> void:
+	_facilities[id]._count_multi = multi
+
+
+func facility_set_upgrades_multiplier(id: int, multi: float) -> void:
+	_facilities[id]._upgrades_multi = multi
+
+
 func facility_set_material_multiplier(id: int, multi: float) -> void:
 	_facilities[id]._material_multi = multi
 
@@ -367,8 +375,6 @@ func manufacturing_multiply_output(factor: float) -> void:
 
 func manufacturing_activate_recipe(recipe: Models.Recipe) -> void:
 	recipe_change.emit(recipe)
-
-
 #endregion
 
 
@@ -448,6 +454,7 @@ func load_game(path: String = get_user_path()):
 		if len(dicts) == len(_facilities):
 			for i in range(len(dicts)):
 				_facilities[i].update_from_dict(dicts[i])
+				facility_changed.emit(i)
 
 	if save_dict.has("inventory"):
 		var dicts: Array = save_dict["inventory"]
@@ -455,6 +462,8 @@ func load_game(path: String = get_user_path()):
 		if len(dicts) == len(_inventory):
 			for i in range(len(dicts)):
 				_inventory[i].update_from_dict(dicts[i])
+			
+		inventory_change.emit()
 
 	if save_dict.has("upgrades"):
 		var dicts: Array = save_dict["upgrades"]
@@ -462,6 +471,7 @@ func load_game(path: String = get_user_path()):
 		if len(dicts) == len(_all_upgrades):
 			for i in range(len(dicts)):
 				_all_upgrades[i].update_from_dict(dicts[i])
+				upgrade_changed.emit(i)
 
 # Returns true if file existed
 func reset_save(path: String = get_user_path()) -> bool:

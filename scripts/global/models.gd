@@ -46,36 +46,49 @@ class HeaderSet:
 class Facility:
 	var _id: int
 	var _fname: String
-	var _cost: float
-	var _output: float
+	var _base_cost: float
+	var _base_output: float
 	var _cost_ratio: float
 	var _count: int
 	var _tens_multi: float
 	var _hnds_multi: float
 
 	var _percent: float = 0
+	var _count_multi: float = 1.0
+	var _upgrades_multi: float = 1.0
 	var _material_multi: float = 1.0
+	
+	var _count_cost_multiplier: float = 1.0
+	var _upgrades_cost_divisor: float = 1.0
 
 	func _init(
 		_id_: int,
 		_fname_: String,
 		_cost_: float,
-		_output_: float,
+		_base_output_: float,
 		_cost_ratio_: float,
 		_tens_multi_: float,
 		_hnds_multi_: float,
 		_count_: int = 0,
-		_material_multi_: float = 1.0
+		_count_multi_: float = 1.0,
+		_upgrades_multi_: float = 1.0,
+		_material_multi_: float = 1.0,
+		_count_cost_multiplier: float = 1.0,
+		_upgrades_cost_divisor_: float = 1.0
 	):
 		self._id = _id_
 		self._fname = _fname_
 		self._cost = _cost_
-		self._output = _output_
+		self._base_output = _base_output_
 		self._cost_ratio = _cost_ratio_
 		self._count = _count_
 		self._tens_multi = _tens_multi_
 		self._hnds_multi = _hnds_multi_
+		self._count_multi = _count_multi_
+		self._upgrades_multi = _upgrades_multi_
 		self._material_multi = _material_multi_
+		self._count_cost_multiplier = _count_cost_multiplier
+		self._upgrades_cost_divisor = _upgrades_cost_divisor_
 
 	func id() -> int:
 		return self._id
@@ -84,10 +97,10 @@ class Facility:
 		return self._fname
 
 	func cost() -> float:
-		return self._cost
+		return self._cost * self._count_cost_multiplier / self._upgrades_cost_divisor
 
 	func output() -> float:
-		return self._output
+		return self._output * self._count_multi * self._upgrades_multi * self._material_multi
 
 	func cost_ratio() -> float:
 		return self._cost_ratio
@@ -103,37 +116,28 @@ class Facility:
 
 	func percent() -> float:
 		return self._percent
+		
+	func count_multi() -> float:
+		return self._count_multi
 
 	func material_multi() -> float:
 		return self._material_multi
+	
+	func upgrades_multi() -> float:
+		return self._upgrades_multi
+	
+	func upgrades_cost_divisor() -> float:
+		return self._upgrades_cost_divisor
 
 	func to_dict() -> Dictionary:
 		var save_dict = {
-			#"id": _id,
-			#"fname": _fname,
-			"cost": _cost,
-			"output": _output,
-			#"cost_ratio": _cost_ratio,
 			"count": _count,
-			#"tens_multi": _tens_multi,
-			#"hnds_multi": _hnds_multi,
-			"percent": _percent,
-			"material_multi": _material_multi,
 		}
 		
 		return save_dict
 	
 	func update_from_dict(dict: Dictionary) -> void:
-		#if dict.has("id"): _id = dict["id"]
-		#if dict.has("fname"): _fname = dict["fname"]
-		if dict.has("cost"): _cost = dict["cost"]
-		if dict.has("output"): _output = dict["output"]
-		#if dict.has("cost_ratio"): _cost_ratio = dict["cost_ratio"]
 		if dict.has("count"): _count = dict["count"]
-		#if dict.has("tens_multi"): _tens_multi = dict["tens_multi"]
-		#if dict.has("hnds_multi"): _hnds_multi = dict["hnds_multi"]
-		if dict.has("percent"): _percent = dict["percent"]
-		if dict.has("material_multi"): _material_multi = dict["material_multi"]
 
 enum BuyQuant {
 	OneX,

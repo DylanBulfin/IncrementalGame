@@ -27,6 +27,12 @@ window/size/viewport_height=568
 window/stretch/mode="viewport"
 window/handheld/orientation=1
 
+[file_customization]
+
+folder_colors={
+"res://out/": "gray"
+}
+
 [input]
 
 screen1={

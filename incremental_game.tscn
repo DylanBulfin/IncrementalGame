@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://60fhdbf847vb"]
+[gd_scene load_steps=9 format=3 uid="uid://60fhdbf847vb"]
 
 [ext_resource type="Script" uid="uid://bc1ihmvtxedbx" path="res://scripts/incremental_game.gd" id="1_jqi77"]
+[ext_resource type="FontFile" uid="uid://lgiidpkvtlkj" path="res://resources/NotoSans.ttf" id="1_osai6"]
 [ext_resource type="Script" uid="uid://pkdotw8jfipn" path="res://scripts/screen_manager.gd" id="2_tnsj2"]
 [ext_resource type="Script" uid="uid://cath35p3bq6u7" path="res://scenes/components/scripts/side_menu.gd" id="3_i1ats"]
 [ext_resource type="Script" uid="uid://clmouaettnoox" path="res://scripts/popup_manager.gd" id="3_qhrio"]
 [ext_resource type="Script" uid="uid://d04itk4nsjwg3" path="res://scripts/header_manager.gd" id="4_wcaps"]
+
+[sub_resource type="Theme" id="Theme_osai6"]
+default_font = ExtResource("1_osai6")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tnwp"]
 bg_color = Color(0.129412, 0.14902, 0.180392, 1)
@@ -16,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_osai6")
 script = ExtResource("1_jqi77")
 
 [node name="ScreenManager" type="Node" parent="."]
